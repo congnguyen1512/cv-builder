@@ -1,0 +1,94 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  }
+}
+
+/* Custom subtle scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.45);
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(100, 116, 139, 0.7);
+}
+
+/* Page break protection for A4 print & preview */
+.cv-avoid-break {
+  break-inside: avoid !important;
+  page-break-inside: avoid !important;
+}
+
+#cv-print-sheet h1,
+#cv-print-sheet h2,
+#cv-print-sheet h3 {
+  break-after: avoid !important;
+  page-break-after: avoid !important;
+}
+
+/* ==========================================================================
+   NATIVE VECTOR PDF PRINT ENGINE (@media print)
+   ========================================================================== */
+@page {
+  size: A4 portrait;
+  margin: 12mm;
+}
+
+@media print {
+  html,
+  body {
+    width: 100% !important;
+    height: auto !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: #ffffff !important;
+    color: #0f172a !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  .no-print {
+    display: none !important;
+  }
+
+  /* Reset workspace containers so #cv-print-sheet prints at 100% vector scale */
+  #app-workspace,
+  #preview-pane,
+  .cv-scale-wrapper {
+    display: block !important;
+    width: 100% !important;
+    height: auto !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: visible !important;
+    transform: none !important;
+    background: transparent !important;
+  }
+
+  #cv-print-sheet {
+    width: 100% !important;
+    min-height: auto !important;
+    max-height: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    box-shadow: none !important;
+    overflow: visible !important;
+    background: transparent !important;
+  }
+
+  /* Remove internal sheet padding in print mode since @page provides the physical margin */
+  .cv-page-padding {
+    padding: 0 !important;
+  }
+}
