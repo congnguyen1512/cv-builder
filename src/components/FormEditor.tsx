@@ -99,7 +99,7 @@ export const FormEditor: React.FC<FormEditorProps> = ({
     personal: true,
     summary: true,
     experience: true,
-    education: false,
+    education: true,
     projects: true,
     skills: true,
     certifications: false,
@@ -947,12 +947,15 @@ export const FormEditor: React.FC<FormEditorProps> = ({
                       />
                     </div>
                     <div>
-                      <label className={labelClass}>Điểm trung bình (GPA) / Xếp loại tốt nghiệp</label>
+                      <label className={labelClass}>
+                        <span>Điểm trung bình tích lũy (GPA)</span>
+                        <span className="text-[11px] font-normal text-slate-500 dark:text-slate-400">(VD: 3.2 / 4.0)</span>
+                      </label>
                       <input
                         type="text"
                         value={edu.gpa}
                         onChange={(e) => updateEdu({ gpa: e.target.value })}
-                        placeholder="VD: 3.65 / 4.0 (Loại Giỏi)"
+                        placeholder="VD: 3.2 / 4.0 hoặc 3.2/4.0 (Loại Giỏi)"
                         className={inputClass}
                       />
                     </div>

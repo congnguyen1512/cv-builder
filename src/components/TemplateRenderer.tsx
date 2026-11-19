@@ -485,7 +485,7 @@ export const TemplateRenderer: React.FC<TemplateRendererProps> = ({
                     <span>{edu.degree}</span>
                     {edu.gpa && (
                       <span className="text-[0.92em] font-semibold text-slate-800">
-                        {ui.gpa}: {edu.gpa}
+                        {edu.gpa.toLowerCase().startsWith('gpa') ? edu.gpa : `${ui.gpa}: ${edu.gpa}`}
                       </span>
                     )}
                   </div>

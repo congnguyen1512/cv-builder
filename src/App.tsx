@@ -48,25 +48,39 @@ export const App: React.FC = () => {
           );
           if (!isOldMock) {
             return parsed.map((item: CVDocument) => {
-              if (
+              const updatedEducation = Array.isArray(item.education)
+                ? item.education.map((edu) => {
+                    if (
+                      edu.gpa === 'Khóa 2022 – 2027' ||
+                      edu.gpa === 'Cohort 2022 – 2027' ||
+                      !edu.gpa
+                    ) {
+                      return { ...edu, gpa: '3.2 / 4.0' };
+                    }
+                    return edu;
+                  })
+                : item.education;
+
+              const updatedDesign =
                 item.design &&
                 item.design.template === 'ats-standard' &&
                 item.design.fontSize === 9.5 &&
                 item.design.sectionGap === 14 &&
                 item.design.pageMargin === 14
-              ) {
-                return {
-                  ...item,
-                  design: {
-                    ...item.design,
-                    fontSize: 9.0,
-                    lineHeight: 1.30,
-                    sectionGap: 10,
-                    pageMargin: 12,
-                  },
-                };
-              }
-              return item;
+                  ? {
+                      ...item.design,
+                      fontSize: 9.0,
+                      lineHeight: 1.30,
+                      sectionGap: 10,
+                      pageMargin: 12,
+                    }
+                  : item.design;
+
+              return {
+                ...item,
+                education: updatedEducation,
+                design: updatedDesign,
+              };
             });
           }
         }
