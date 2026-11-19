@@ -24,40 +24,51 @@ import { DesignCustomizer } from './components/DesignCustomizer';
 import { AtsPanel } from './components/AtsPanel';
 import { TemplateRenderer } from './components/TemplateRenderer';
 
-const STORAGE_KEY = 'cv_builder_pro_documents_v1';
-const ACTIVE_ID_KEY = 'cv_builder_pro_active_id_v1';
+const STORAGE_KEY = 'cv_builder_pro_documents_v2';
+const ACTIVE_ID_KEY = 'cv_builder_pro_active_id_v2';
 const THEME_KEY = 'cv_builder_pro_theme_v1';
 
 export const App: React.FC = () => {
   // 1. Load initial CVs from localStorage or fallback to SAMPLE_CV_VI & SAMPLE_CV_EN
   const [cvList, setCvList] = useState<CVDocument[]>(() => {
     try {
-      const raw = localStorage.getItem(STORAGE_KEY);
+      let raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) {
+        raw = localStorage.getItem('cv_builder_pro_documents_v1');
+      }
       if (raw) {
         const parsed = JSON.parse(raw);
         if (Array.isArray(parsed) && parsed.length > 0) {
-          // Gracefully upgrade any old default design settings (which caused slight overflow onto page 2)
-          return parsed.map((item: CVDocument) => {
-            if (
-              item.design &&
-              item.design.template === 'ats-standard' &&
-              item.design.fontSize === 9.5 &&
-              item.design.sectionGap === 14 &&
-              item.design.pageMargin === 14
-            ) {
-              return {
-                ...item,
-                design: {
-                  ...item.design,
-                  fontSize: 9.0,
-                  lineHeight: 1.30,
-                  sectionGap: 10,
-                  pageMargin: 12,
-                },
-              };
-            }
-            return item;
-          });
+          // Check if this contains old mock profile data
+          const isOldMock = parsed.some(
+            (item: CVDocument) =>
+              item.personalInfo?.fullName === 'NGUYỄN MINH KHÔI' ||
+              item.personalInfo?.fullName === 'Trần Đình Khoa' ||
+              item.id === 'cv-senior-fullstack-vi'
+          );
+          if (!isOldMock) {
+            return parsed.map((item: CVDocument) => {
+              if (
+                item.design &&
+                item.design.template === 'ats-standard' &&
+                item.design.fontSize === 9.5 &&
+                item.design.sectionGap === 14 &&
+                item.design.pageMargin === 14
+              ) {
+                return {
+                  ...item,
+                  design: {
+                    ...item.design,
+                    fontSize: 9.0,
+                    lineHeight: 1.30,
+                    sectionGap: 10,
+                    pageMargin: 12,
+                  },
+                };
+              }
+              return item;
+            });
+          }
         }
       }
     } catch (e) {
@@ -67,7 +78,11 @@ export const App: React.FC = () => {
   });
 
   const [activeCvId, setActiveCvId] = useState<string>(() => {
-    return localStorage.getItem(ACTIVE_ID_KEY) || SAMPLE_CV_VI.id;
+    const saved = localStorage.getItem(ACTIVE_ID_KEY) || localStorage.getItem('cv_builder_pro_active_id_v1');
+    if (saved && saved !== 'cv-senior-fullstack-vi') {
+      return saved;
+    }
+    return SAMPLE_CV_VI.id;
   });
 
   const [darkMode, setDarkMode] = useState<boolean>(() => {
