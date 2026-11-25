@@ -24,12 +24,12 @@ import { DesignCustomizer } from './components/DesignCustomizer';
 import { AtsPanel } from './components/AtsPanel';
 import { TemplateRenderer } from './components/TemplateRenderer';
 
-const STORAGE_KEY = 'cv_builder_pro_documents_v4';
-const ACTIVE_ID_KEY = 'cv_builder_pro_active_id_v4';
+const STORAGE_KEY = 'cv_builder_pro_documents_v5';
+const ACTIVE_ID_KEY = 'cv_builder_pro_active_id_v5';
 const THEME_KEY = 'cv_builder_pro_theme_v1';
 
 export const App: React.FC = () => {
-  // 1. Load initial CVs from localStorage or fallback to [SAMPLE_CV_EN, SAMPLE_CV_VI]
+  // 1. Load initial CVs from localStorage or fallback to [SAMPLE_CV_VI, SAMPLE_CV_EN]
   const [cvList, setCvList] = useState<CVDocument[]>(() => {
     try {
       const raw = localStorage.getItem(STORAGE_KEY);
@@ -42,7 +42,7 @@ export const App: React.FC = () => {
     } catch (e) {
       console.error('Failed to load CVs from localStorage', e);
     }
-    return [SAMPLE_CV_EN, SAMPLE_CV_VI];
+    return [SAMPLE_CV_VI, SAMPLE_CV_EN];
   });
 
   const [activeCvId, setActiveCvId] = useState<string>(() => {
@@ -50,7 +50,7 @@ export const App: React.FC = () => {
     if (saved) {
       return saved;
     }
-    return SAMPLE_CV_EN.id;
+    return SAMPLE_CV_VI.id;
   });
 
   const [darkMode, setDarkMode] = useState<boolean>(() => {
