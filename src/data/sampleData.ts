@@ -21,7 +21,7 @@ export const SECTION_LABELS: Record<LanguageCode, Record<SectionId, string>> = {
     certifications: 'Certifications & Awards',
     activities: 'Leadership & Volunteering',
     references: 'References',
-    custom: 'Additional Information',
+    custom: 'Technical Highlights',
   },
 };
 
@@ -364,6 +364,8 @@ export const SAMPLE_CV_EN: CVDocument = {
     ...SAMPLE_CV_VI.personalInfo,
     fullName: 'NGUYEN MINH CONG',
     jobTitle: 'Frontend Developer (React / TypeScript)',
+    email: 'nguyenminhcong.lbu@gmail.com',
+    phone: '+84 394 093 282',
     address: 'Da Nang City, Vietnam',
     avatarShape: 'circle',
     socials: {
