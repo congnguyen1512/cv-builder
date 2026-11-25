@@ -927,6 +927,11 @@ export const TemplateRenderer: React.FC<TemplateRendererProps> = ({
           margin: ${design.pageMargin}mm;
         }
         @media print {
+          html, body, #cv-print-sheet {
+            background: #ffffff !important;
+            background-color: #ffffff !important;
+            color: #0f172a !important;
+          }
           .cv-page-padding {
             padding: 0 !important;
           }

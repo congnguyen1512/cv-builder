@@ -39,20 +39,24 @@
 
 /* ==========================================================================
    NATIVE VECTOR PDF PRINT ENGINE (@media print)
+   Always forces pure white paper & high-contrast ink, even in dark mode
    ========================================================================== */
 @page {
   size: A4 portrait;
-  margin: 12mm;
+  margin: 11mm;
 }
 
 @media print {
   html,
-  body {
+  html.dark,
+  body,
+  body.dark {
     width: 100% !important;
     height: auto !important;
     margin: 0 !important;
     padding: 0 !important;
     background: #ffffff !important;
+    background-color: #ffffff !important;
     color: #0f172a !important;
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
@@ -62,9 +66,11 @@
     display: none !important;
   }
 
-  /* Reset workspace containers so #cv-print-sheet prints at 100% vector scale */
+  /* Reset workspace containers so #cv-print-sheet prints at 100% vector scale with pure white background */
+  #root,
   #app-workspace,
   #preview-pane,
+  #preview-pane > div,
   .cv-scale-wrapper {
     display: block !important;
     width: 100% !important;
@@ -73,10 +79,15 @@
     padding: 0 !important;
     overflow: visible !important;
     transform: none !important;
-    background: transparent !important;
+    background: #ffffff !important;
+    background-color: #ffffff !important;
+    color: #0f172a !important;
   }
 
-  #cv-print-sheet {
+  /* Force #cv-print-sheet to be ink-accurate pure white paper */
+  #cv-print-sheet,
+  html.dark #cv-print-sheet,
+  body.dark #cv-print-sheet {
     width: 100% !important;
     min-height: auto !important;
     max-height: none !important;
@@ -84,7 +95,17 @@
     padding: 0 !important;
     box-shadow: none !important;
     overflow: visible !important;
-    background: transparent !important;
+    background: #ffffff !important;
+    background-color: #ffffff !important;
+    color: #0f172a !important;
+    break-inside: auto !important;
+    page-break-inside: auto !important;
+  }
+
+  /* Prevent awkward page breaks */
+  .cv-avoid-break {
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
   }
 
   /* Remove internal sheet padding in print mode since @page provides the physical margin */

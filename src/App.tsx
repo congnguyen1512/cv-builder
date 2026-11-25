@@ -24,65 +24,19 @@ import { DesignCustomizer } from './components/DesignCustomizer';
 import { AtsPanel } from './components/AtsPanel';
 import { TemplateRenderer } from './components/TemplateRenderer';
 
-const STORAGE_KEY = 'cv_builder_pro_documents_v2';
-const ACTIVE_ID_KEY = 'cv_builder_pro_active_id_v2';
+const STORAGE_KEY = 'cv_builder_pro_documents_v3';
+const ACTIVE_ID_KEY = 'cv_builder_pro_active_id_v3';
 const THEME_KEY = 'cv_builder_pro_theme_v1';
 
 export const App: React.FC = () => {
   // 1. Load initial CVs from localStorage or fallback to SAMPLE_CV_VI & SAMPLE_CV_EN
   const [cvList, setCvList] = useState<CVDocument[]>(() => {
     try {
-      let raw = localStorage.getItem(STORAGE_KEY);
-      if (!raw) {
-        raw = localStorage.getItem('cv_builder_pro_documents_v1');
-      }
+      const raw = localStorage.getItem(STORAGE_KEY);
       if (raw) {
         const parsed = JSON.parse(raw);
         if (Array.isArray(parsed) && parsed.length > 0) {
-          // Check if this contains old mock profile data
-          const isOldMock = parsed.some(
-            (item: CVDocument) =>
-              item.personalInfo?.fullName === 'NGUYỄN MINH KHÔI' ||
-              item.personalInfo?.fullName === 'Trần Đình Khoa' ||
-              item.id === 'cv-senior-fullstack-vi'
-          );
-          if (!isOldMock) {
-            return parsed.map((item: CVDocument) => {
-              const updatedEducation = Array.isArray(item.education)
-                ? item.education.map((edu) => {
-                    if (
-                      edu.gpa === 'Khóa 2022 – 2027' ||
-                      edu.gpa === 'Cohort 2022 – 2027' ||
-                      !edu.gpa
-                    ) {
-                      return { ...edu, gpa: '3.2 / 4.0' };
-                    }
-                    return edu;
-                  })
-                : item.education;
-
-              const updatedDesign =
-                item.design &&
-                item.design.template === 'ats-standard' &&
-                item.design.fontSize === 9.5 &&
-                item.design.sectionGap === 14 &&
-                item.design.pageMargin === 14
-                  ? {
-                      ...item.design,
-                      fontSize: 9.0,
-                      lineHeight: 1.30,
-                      sectionGap: 10,
-                      pageMargin: 12,
-                    }
-                  : item.design;
-
-              return {
-                ...item,
-                education: updatedEducation,
-                design: updatedDesign,
-              };
-            });
-          }
+          return parsed;
         }
       }
     } catch (e) {
@@ -92,8 +46,8 @@ export const App: React.FC = () => {
   });
 
   const [activeCvId, setActiveCvId] = useState<string>(() => {
-    const saved = localStorage.getItem(ACTIVE_ID_KEY) || localStorage.getItem('cv_builder_pro_active_id_v1');
-    if (saved && saved !== 'cv-senior-fullstack-vi') {
+    const saved = localStorage.getItem(ACTIVE_ID_KEY);
+    if (saved) {
       return saved;
     }
     return SAMPLE_CV_VI.id;
@@ -307,9 +261,19 @@ export const App: React.FC = () => {
     e.target.value = '';
   };
 
-  // Print Vector PDF
+  // Print Vector PDF: temporarily deactivate dark mode to ensure 100% white paper & crisp dark ink
   const handlePrintPdf = () => {
-    window.print();
+    const root = document.documentElement;
+    const wasDark = root.classList.contains('dark');
+    if (wasDark) {
+      root.classList.remove('dark');
+    }
+    setTimeout(() => {
+      window.print();
+      if (wasDark) {
+        root.classList.add('dark');
+      }
+    }, 60);
   };
 
   // Auto-fit 1 page helper
@@ -319,8 +283,8 @@ export const App: React.FC = () => {
       design: {
         ...activeCv.design,
         fontSize: 9.0,
-        lineHeight: 1.28,
-        sectionGap: 10,
+        lineHeight: 1.30,
+        sectionGap: 9,
         pageMargin: 11,
       },
     });
