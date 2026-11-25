@@ -222,14 +222,14 @@ export const SAMPLE_CV_VI: CVDocument = {
     },
     {
       id: 'proj-3',
-      name: 'GGTran & Multi-Provider API Integration Platform',
-      role: 'Web & API Developer',
-      startDate: '2025-09',
-      endDate: '2026-01',
-      techStack: ['React 19', 'TypeScript', 'Node.js', 'Vite', 'Multi-AI API Fallback', 'Tailwind CSS'],
-      link: 'https://github.com/congnguyen1512',
+      name: 'Caregiver Web Portal — Hệ Thống Web Dashboard Quản Trị & Giám Sát Thời Gian Thực',
+      role: 'Lead Web Developer',
+      startDate: '2026-01',
+      endDate: '',
+      techStack: ['React', 'TypeScript', 'Tailwind CSS', 'Vite', 'Supabase Realtime', 'Node.js', 'RESTful API'],
+      link: 'https://caregiverweb.vercel.app/',
       description:
-        '• Xây dựng ứng dụng Web tích hợp nhiều nhà cung cấp API, tự động chuyển đổi dự phòng (Auto-Fallback <50ms) khi gặp lỗi Rate Limit (HTTP 429) hoặc hết Quota.\n• Tối ưu hóa giao diện người dùng Responsive, lưu trữ cache dữ liệu cục bộ và hiển thị độ trễ API trực quan.',
+        '• Xây dựng Web App Dashboard quản trị thời gian thực với React, TypeScript và Tailwind CSS, giao diện Responsive 100% chuẩn UI/UX.\n• Tích hợp hệ thống RESTful API & Supabase Realtime (WebSockets) đồng bộ dữ liệu đa luồng, xử lý cảnh báo SOS <150ms và đạt điểm Google Lighthouse 98/100.',
     },
   ],
   skills: [
@@ -439,14 +439,14 @@ export const SAMPLE_CV_EN: CVDocument = {
     },
     {
       id: 'proj-3',
-      name: 'GGTran — Resilient Multi-Provider AI Translation Web Application',
-      role: 'Frontend Developer (React 19)',
+      name: 'Medical AI Dashboard — Two-Stage CT/MRI & Stroke Classification System',
+      role: 'AI & Web Developer',
       startDate: '2025-09',
       endDate: '2026-01',
-      techStack: ['React 19', 'TypeScript', 'Tailwind CSS', 'Vite', 'Axios', 'REST API Failover'],
-      link: 'https://github.com/congnguyen1512',
+      techStack: ['Python', 'PyTorch', 'Keras', 'Node.js', 'Express', 'React', 'Medical Imaging'],
+      link: 'https://dacn3-medical-dashboard.vercel.app/',
       description:
-        '• Built a responsive translation web app with **React 19 & TypeScript**, connecting multiple AI APIs with prioritized <50ms automated fallback upon rate limits.\n• Features localized translation history caching, low-latency client rendering, and live provider attribution telemetry.',
+        '• Developed an automated two-stage medical imaging diagnostic web dashboard (CT vs. MRI classification & stroke detection) with interactive confidence reports.\n• Live Web: dacn3-medical-dashboard.vercel.app | GitHub: github.com/congnguyen1512/CT_AND_MRI.',
     },
   ],
   skills: [
