@@ -24,8 +24,8 @@ import { DesignCustomizer } from './components/DesignCustomizer';
 import { AtsPanel } from './components/AtsPanel';
 import { TemplateRenderer } from './components/TemplateRenderer';
 
-const STORAGE_KEY = 'cv_builder_pro_documents_v6';
-const ACTIVE_ID_KEY = 'cv_builder_pro_active_id_v6';
+const STORAGE_KEY = 'cv_builder_pro_documents_v7';
+const ACTIVE_ID_KEY = 'cv_builder_pro_active_id_v7';
 const THEME_KEY = 'cv_builder_pro_theme_v1';
 
 export const App: React.FC = () => {
